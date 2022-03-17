@@ -1,4 +1,9 @@
 Flask~=1.1.2
+flask_migrate
+flask_socketio
+flask_cors
+flask_login
+flask_httpauth
 Werkzeug~=1.0.1
 itsdangerous~=1.1.0
 PyJWT~=2.3.0

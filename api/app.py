@@ -34,6 +34,8 @@ def create_app(config_class=Config):
     app.register_blueprint(tokens, url_prefix='/api')
     from api.users import users
     app.register_blueprint(users, url_prefix='/api')
+    from api.fake import fake
+    app.register_blueprint(fake)
 
     @app.route('/')
     def index():  # pragma: no cover

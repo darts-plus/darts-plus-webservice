@@ -1,5 +1,5 @@
 from api import ma
-from api.models import User, Post
+from api.models import User
 
 paginated_schema_cache = {}
 
@@ -57,8 +57,6 @@ class UserSchema(ma.SQLAlchemySchema):
     about_me = ma.auto_field()
     first_seen = ma.auto_field(dump_only=True)
     last_seen = ma.auto_field(dump_only=True)
-    posts_url = ma.URLFor('posts.user_all', values={'id': '<id>'},
-                          dump_only=True)
 
 
 class TokenSchema(ma.Schema):

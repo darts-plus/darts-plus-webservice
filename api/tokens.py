@@ -3,7 +3,6 @@ from apifairy import authenticate, body, response, other_responses
 
 from api.app import db
 from api.auth import basic_auth
-from api.email import send_email
 from api.models import User
 from api.schemas import TokenSchema, PasswordResetRequestSchema, \
     PasswordResetSchema, EmptySchema
@@ -36,20 +35,6 @@ def refresh(args):
     access_token, refresh_token = user['user'].generate_tokens(fresh=False)
     return {'access_token': access_token, 'refresh_token': refresh_token}
 
-
-@tokens.route('/tokens/reset', methods=['POST'])
-@body(PasswordResetRequestSchema)
-@response(EmptySchema, status_code=204,
-          description='Password reset email sent')
-def reset(args):
-    """Request a password reset token"""
-    user = db.session.scalar(User.select().filter_by(email=args['email']))
-    if user is not None:
-        reset_token = user.generate_reset_token()
-        reset_url = (request.referrer or '') + '?token=' + reset_token
-        send_email(args['email'], 'Reset Your Password', 'reset',
-                   token=reset_token, url=reset_url)
-    return {}
 
 
 @tokens.route('/tokens/reset', methods=['PUT'])

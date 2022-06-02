@@ -1,32 +1,14 @@
 """
-Welcome to the documentation for the Microblog API!
+Welcome to the documentation for the DartsPlus API!
 
 This project is written in Python, with the
 [Flask](https://flask.palletsprojects.com/) web framework. This documentation
-is generated automatically from the
-[project's source code](https://github.com/miguelgrinberg/microblog-api) using
+is generated automatically using
 the [APIFairy](https://github.com/miguelgrinberg/apifairy) Flask extension.
-
-## Introduction
-
-Microblog-API is an easy to use web API for creating microblogs. It is an ideal
-project to use when learning a front end framework, as it provides a fully
-implemented back end that you can integrate against.
-
-Microblog API provides all the base features required to implement a
-microblogging project:
-
-- User registration, login and logout
-- Password recovery flow with reset emails
-- Post creation and deletion
-- Follow and unfollow users
-- Timeline with posts from followed users
-- Pagination of collections
-- Option to disable authentication
 
 ## Configuration
 
-If you are running Microblog API yourself while developing your front end,
+If you are running DartsPlus API yourself while developing your front end,
 there are a number of environment variables that you can set to configure its
 behavior. The variables can be defined directly in the environment or in a
 `.env` file in the project directory. The following table lists all the
@@ -34,7 +16,7 @@ environment variables that are currently used:
 
 | Environment Variable | Default | Description |
 | - | - | - |
-| `SECRET_KEY` | `top-secret!` | A secret key used when signing tokens. |
+| `SECRET_KEY` | `dartsplus` | A secret key used when signing tokens. |
 | `DATABASE_URL`  | `sqlite:///db.sqlite` | The database URL, as defined by the [SQLAlchemy](https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls) framework. |
 | `SQL_ECHO` | not defined | Whether to echo SQL statements to the console for debugging purposes. |
 | `DISABLE_AUTH` | not defined | Whether to disable authentication. When running with authentication disabled, the user is assumed to be logged as the first user in the database. |
@@ -42,12 +24,6 @@ environment variables that are currently used:
 | `REFRESH_TOKEN_EXPIRATION` | `1440` (24 hours) | The number of minutes a refresh token is valid for. |
 | `RESET_TOKEN_EXPIRATION` | `15` (15 minutes) | The number of minutes a reset token is valid for. |
 | `DOCS_UI` | `elements` | The UI library to use for the documentation. Allowed values are `swagger_ui`, `redoc`, `rapidoc` and `elements`. |
-| `MAIL_SERVER` | `localhost` | The mail server to use for sending emails. |
-| `MAIL_PORT` | `25` | The port to use for sending emails. |
-| `MAIL_USE_TLS` | not defined | Whether to use TLS when sending emails. |
-| `MAIL_USERNAME` | not defined | The username to use for sending emails. |
-| `MAIL_PASSWORD` | not defined | The password to use for sending emails. |
-| `MAIL_DEFAULT_SENDER` | `donotreply@microblog.example.com` | The default sender to use for emails. |
 
 ## Authentication
 

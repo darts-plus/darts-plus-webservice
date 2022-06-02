@@ -1,0 +1,23 @@
+{
+  "name": "DartsPlus API",
+  "description": "A simple flask api based on sqlite include unit tests and documentation.",
+  "repository": "https://github.com/darts-plus/darts-plus-webservice",
+  "env": {
+    "DISABLE_AUTH": {
+      "required": false,
+      "description": "Set to any non-empty value to disable token authentication."
+    },
+    "SECRET_KEY": {
+      "description": "A secret key used to sign tokens.",
+      "generator": "secret"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:hobby-dev"
+    }
+  ],
+  "scripts": {
+    "postdeploy": "bash -c \"pip install psycopg2-binary && flask db upgrade && flask fake users 10 && flask fake posts 100\""
+  }
+}

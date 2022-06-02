@@ -1,62 +1,22 @@
 import os
-import random
+from dotenv import load_dotenv
 
-from flask import jsonify
-
+load_dotenv()
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or "hui"
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    ID_MAX = 65535
-    ID_MIN = 50
-    MESSAGE_OK = "Good"
-    MESSAGE_ERROR = "Error"
-    NOT_ACCEPTABLE = 406
-    INTERNAL_SERVER_ERROR = 500
-    OK = 200
-    ROOM_NAME = "/game/"
-
-    @staticmethod
-    def init_app(app):
-        pass
-
-
-class DevelopmentConfig(Config):
-    DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
-
-
-class TestingConfig(Config):
-    TESTING = True
-    WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
-        'sqlite://'
-
-
-class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-
-
-config = {
-    'development': DevelopmentConfig,
-    'testing': TestingConfig,
-    'production': ProductionConfig,
-    'default': DevelopmentConfig
-}
-
-
-def generate_http_response(status, message=Config.MESSAGE_ERROR, code=Config.NOT_ACCEPTABLE):
-    dictionary = {"status": status, "message": message}
-    return jsonify(dictionary), code
-
-
-def get_dictionary(objects: list):
-    dictionary = []
-    for i in objects:
-        dictionary.append(i.get_dictionary())
-    return dictionary
-
+    SECRET_KEY = os.environ.get('SECRET_KEY') or "dartsplus"
+    ALCHEMICAL_DATABASE_URL = os.environ.get('DATABASE_URL') or \
+                              'sqlite:///' + os.path.join(basedir, 'db.sqlite')
+    ALCHEMICAL_ENGINE_OPTIONS = {'echo': bool(os.environ.get('SQL_ECHO'))}
+    DISABLE_AUTH = bool(os.environ.get('DISABLE_AUTH'))
+    ACCESS_TOKEN_EXPIRATION = int(os.environ.get(
+        'ACCESS_TOKEN_EXPIRATION', '60')) * 60  # 1 hour
+    REFRESH_TOKEN_EXPIRATION = int(os.environ.get(
+        'REFRESH_TOKEN_EXPIRATION', '1440')) * 60  # 24 hours
+    RESET_TOKEN_EXPIRATION = int(os.environ.get(
+        'RESET_TOKEN_EXPIRATION', '15')) * 60  # 15 minutes
+    APIFAIRY_TITLE = 'DartsPlus API'
+    APIFAIRY_VERSION = '0.1'
+    APIFAIRY_UI = os.environ.get('DOCS_UI', 'elements')

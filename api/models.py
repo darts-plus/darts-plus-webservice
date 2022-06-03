@@ -29,32 +29,22 @@ followers = sqla.Table(
 class User(Updateable, db.Model):
     __tablename__ = 'users'
 
-    id = sqla.Column(sqla.Integer, primary_key=True)
-    username = sqla.Column(sqla.String(64), index=True, unique=True,
-                           nullable=False)
-    email = sqla.Column(sqla.String(120), index=True, unique=True,
-                        nullable=False)
-    password_hash = sqla.Column(sqla.String(128))
-    about_me = sqla.Column(sqla.String(140))
-    first_seen = sqla.Column(sqla.DateTime, default=datetime.utcnow)
-    last_seen = sqla.Column(sqla.DateTime, default=datetime.utcnow)
+    id = db.Column(db.Integer, primary_key=True)
+    password_hash = db.Column(db.String(128))
+    name = db.Column(db.String(64), unique=True, index=True)
+    nick = db.Column(db.String(64), unique=True, index=True)
+    phone = db.Column(db.Integer, unique=True)
+    wins = db.Column(db.Integer)
 
-    following = sqla_orm.relationship(
-        'User', secondary=followers,
-        primaryjoin=(followers.c.follower_id == id),
-        secondaryjoin=(followers.c.followed_id == id),
-        back_populates='followers', lazy='noload')
-    followers = sqla_orm.relationship(
-        'User', secondary=followers,
-        primaryjoin=(followers.c.followed_id == id),
-        secondaryjoin=(followers.c.follower_id == id),
-        back_populates='following', lazy='noload')
-
-    def following_select(self):
-        return User.select().where(sqla_orm.with_parent(self, User.following))
-
-    def followers_select(self):
-        return User.select().where(sqla_orm.with_parent(self, User.followers))
+    # relationship with setting
+    active_games = db.relationship('Game', secondary=user_game, backref='players')
+    # relationship with throw
+    throws = db.relationship('Throw', backref='player', lazy='dynamic')
+    # relationship with dartboard
+    board_id = db.Column(db.Integer, db.ForeignKey('dartBoards.id'))
+    # player data
+    attempts = db.Column(db.Integer)
+    points = db.Column(db.Integer)
 
     def __repr__(self):  # pragma: no cover
         return '<User {}>'.format(self.username)
@@ -62,11 +52,6 @@ class User(Updateable, db.Model):
     @property
     def url(self):
         return url_for('users.get', id=self.id)
-
-    @property
-    def avatar_url(self):
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-        return f'https://www.gravatar.com/avatar/{digest}?d=identicon'
 
     @property
     def password(self):

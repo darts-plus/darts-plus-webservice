@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:alpine
+    ports:
+      - "5430:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dartPrecursor
+      volumes: "data:/data"
+      restart: always

@@ -1,10 +1,10 @@
-package com.example.dartPrecoursor;
+package com.dartPlus.v1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DartPrecoursorApplicationTests {
+class V1ApplicationTests {
 
 	@Test
 	void contextLoads() {

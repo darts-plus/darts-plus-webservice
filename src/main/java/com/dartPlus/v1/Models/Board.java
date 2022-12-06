@@ -1,4 +1,4 @@
-package com.example.dartPrecoursor.Model;
+package com.dartPlus.v1.Models;
 
 import lombok.Data;
 
@@ -9,12 +9,13 @@ import java.util.List;
 @Data
 @Table(name = "board")
 public class Board {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private long id;
 
-    @OneToMany(mappedBy = "usedBoard")
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @OneToMany(mappedBy="board")
     private List<User> users;
 
 }
